@@ -25,7 +25,7 @@ static const NSUInteger WFImageViewCount = 3;
 {
     self = [super init];
     if (self) {
-        self.scrollDirection = WFImageCycleViewScrollDirectionhorizontal;
+        self.scrollDirection = WFImageCycleViewScrollDirectionHorizontal;
         self.displayPageIndex = 0;
     }
     return self;
@@ -66,7 +66,7 @@ static const NSUInteger WFImageViewCount = 3;
     [super layoutSubviews];
     
     self.scrollView.frame = self.bounds;
-    CGFloat contentSizeW = (self.scrollDirection == WFImageCycleViewScrollDirectionhorizontal ? self.bounds.size.width * WFImageViewCount : self.bounds.size.width);
+    CGFloat contentSizeW = (self.scrollDirection == WFImageCycleViewScrollDirectionHorizontal ? self.bounds.size.width * WFImageViewCount : self.bounds.size.width);
     CGFloat contentSizeH = (self.scrollDirection == WFImageCycleViewScrollDirectionVertical ? self.bounds.size.height * WFImageViewCount : self.bounds.size.height);
     self.scrollView.contentSize = CGSizeMake(contentSizeW, contentSizeH);
     
@@ -77,7 +77,7 @@ static const NSUInteger WFImageViewCount = 3;
     for (NSUInteger i = 0; i < self.imageViews.count; i++) {
         UIImageView *imageView = self.imageViews[i];
         imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
-        if (self.scrollDirection == WFImageCycleViewScrollDirectionhorizontal) {
+        if (self.scrollDirection == WFImageCycleViewScrollDirectionHorizontal) {
             imageViewX += imageViewW;
         } else {
             imageViewY += imageViewH;
@@ -91,7 +91,7 @@ static const NSUInteger WFImageViewCount = 3;
 
 - (void)loadImages
 {
-    CGFloat contentOffsetX = (self.scrollDirection == WFImageCycleViewScrollDirectionhorizontal ? self.scrollView.bounds.size.width : 0);
+    CGFloat contentOffsetX = (self.scrollDirection == WFImageCycleViewScrollDirectionHorizontal ? self.scrollView.bounds.size.width : 0);
     CGFloat contentOffsetY = (self.scrollDirection == WFImageCycleViewScrollDirectionVertical ? self.scrollView.bounds.size.height : 0);
     self.scrollView.contentOffset = CGPointMake(contentOffsetX, contentOffsetY);
     
@@ -131,7 +131,7 @@ static const NSUInteger WFImageViewCount = 3;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (self.scrollDirection == WFImageCycleViewScrollDirectionhorizontal) {
+    if (self.scrollDirection == WFImageCycleViewScrollDirectionHorizontal) {
         CGFloat contentOffsetX = scrollView.contentOffset.x;
         if (contentOffsetX <= 0) {
             self.displayPageIndex = [self previousPageIndex];

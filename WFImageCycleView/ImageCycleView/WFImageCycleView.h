@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSUInteger, WFImageCycleViewScrollDirection) {
-    WFImageCycleViewScrollDirectionhorizontal, // 水平滚动
+    WFImageCycleViewScrollDirectionHorizontal, // 水平滚动
     WFImageCycleViewScrollDirectionVertical, // 垂直滚动
 };
 
