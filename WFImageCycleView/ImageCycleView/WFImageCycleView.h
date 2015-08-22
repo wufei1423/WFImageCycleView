@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSUInteger, WFImageCycleViewScrollDirection) {
-    WFImageCycleViewScrollDirectionHorizontal, // 水平滚动
-    WFImageCycleViewScrollDirectionVertical, // 垂直滚动
+    WFImageCycleViewScrollDirectionHorizontal,
+    WFImageCycleViewScrollDirectionVertical,
 };
 
 @class WFImageCycleView;
@@ -29,8 +29,19 @@ typedef NS_ENUM(NSUInteger, WFImageCycleViewScrollDirection) {
 
 @property (nonatomic, weak) id<WFImageCycleViewDataSource> dataSource;
 
-@property (nonatomic, assign) WFImageCycleViewScrollDirection scrollDirection; // default WFImageCycleViewScrollDirectionhorizontal
+/**
+ *  default WFImageCycleViewScrollDirectionhorizontal
+ */
+@property (nonatomic, assign) WFImageCycleViewScrollDirection scrollDirection;
 
-@property (nonatomic, assign) NSUInteger displayPageIndex; // default 0
+/**
+ *  default 0, first page
+ */
+@property (nonatomic, assign) NSUInteger displayPageIndex;
+
+/**
+ *  default 0, not auto scroll
+ */
+@property (nonatomic, assign) NSTimeInterval autoScrollTimeInterval;
 
 @end

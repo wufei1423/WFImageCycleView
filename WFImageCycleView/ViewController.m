@@ -23,6 +23,7 @@
     
     WFImageCycleView *cycleView = [[WFImageCycleView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 200)];
     cycleView.scrollDirection = WFImageCycleViewScrollDirectionHorizontal;
+    cycleView.autoScrollTimeInterval = 2;
     cycleView.dataSource = self;
     [self.view addSubview:cycleView];
 }

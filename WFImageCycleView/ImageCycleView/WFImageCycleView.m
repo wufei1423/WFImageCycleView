@@ -14,6 +14,7 @@ static const NSUInteger WFImageViewCount = 3;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *imageViews;
+@property (nonatomic, strong) NSTimer *scrollTimer;
 
 @end
 
@@ -65,11 +66,13 @@ static const NSUInteger WFImageViewCount = 3;
 {
     [super layoutSubviews];
     
+    // set scroll attrs
     self.scrollView.frame = self.bounds;
     CGFloat contentSizeW = (self.scrollDirection == WFImageCycleViewScrollDirectionHorizontal ? self.bounds.size.width * WFImageViewCount : self.bounds.size.width);
     CGFloat contentSizeH = (self.scrollDirection == WFImageCycleViewScrollDirectionVertical ? self.bounds.size.height * WFImageViewCount : self.bounds.size.height);
     self.scrollView.contentSize = CGSizeMake(contentSizeW, contentSizeH);
     
+    // set imageViews attrs
     CGFloat imageViewX = 0;
     CGFloat imageViewY = 0;
     CGFloat imageViewW = self.bounds.size.width;
@@ -84,10 +87,39 @@ static const NSUInteger WFImageViewCount = 3;
         }
     }
     
+    // load images
     [self loadImages];
+    
+    // start auto scroll
+    [self startAutoScroll];
 }
 
-#pragma mark - private method
+#pragma mark - auto scroll
+
+- (void)startAutoScroll
+{
+    if (self.autoScrollTimeInterval == 0) return;
+
+    self.scrollTimer = [NSTimer scheduledTimerWithTimeInterval:self.autoScrollTimeInterval target:self selector:@selector(autoScroll) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.scrollTimer forMode:NSRunLoopCommonModes];
+}
+
+- (void)endAutoScroll
+{
+    if (self.autoScrollTimeInterval == 0) return;
+    
+    [self.scrollTimer invalidate];
+    self.scrollTimer = nil;
+}
+
+- (void)autoScroll
+{
+    CGFloat contentOffsetX = (self.scrollDirection == WFImageCycleViewScrollDirectionHorizontal ? self.scrollView.bounds.size.width * (WFImageViewCount - 1) : 0);
+    CGFloat contentOffsetY = (self.scrollDirection == WFImageCycleViewScrollDirectionVertical ? self.scrollView.bounds.size.height * (WFImageViewCount - 1) : 0);
+    [self.scrollView setContentOffset:CGPointMake(contentOffsetX, contentOffsetY) animated:YES];
+}
+
+#pragma mark - load images
 
 - (void)loadImages
 {
@@ -150,6 +182,16 @@ static const NSUInteger WFImageViewCount = 3;
             [self loadImages];
         }
     }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self endAutoScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self startAutoScroll];
 }
 
 @end
