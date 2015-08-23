@@ -8,7 +8,7 @@
 
 #import "WFImageCycleView.h"
 
-static const NSUInteger WFImageViewCount = 3;
+static const NSUInteger WFImageViewCount = 3; // do not try to change
 
 @interface WFImageCycleView () <UIScrollViewDelegate>
 
