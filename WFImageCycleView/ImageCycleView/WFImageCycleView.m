@@ -87,6 +87,11 @@ static const NSUInteger WFImageViewCount = 3; // do not try to change
         }
     }
     
+    // notify default image index
+    if ([self.delegate respondsToSelector:@selector(imageCycleView:didScrollToImageAtIndex:)]) {
+        [self.delegate imageCycleView:self didScrollToImageAtIndex:self.displayPageIndex];
+    }
+    
     // load images
     [self loadImages];
     
@@ -128,13 +133,13 @@ static const NSUInteger WFImageViewCount = 3; // do not try to change
     self.scrollView.contentOffset = CGPointMake(contentOffsetX, contentOffsetY);
     
     UIImageView *imageView0 = self.imageViews[0];
-    imageView0.image = [self.dataSource imageInCycleView:self atIndex:[self previousPageIndex]];
+    imageView0.image = [self.dataSource imageCycleView:self imageAtIndex:[self previousPageIndex]];
     
     UIImageView *imageView1 = self.imageViews[1];
-    imageView1.image = [self.dataSource imageInCycleView:self atIndex:self.displayPageIndex];
+    imageView1.image = [self.dataSource imageCycleView:self imageAtIndex:self.displayPageIndex];
     
     UIImageView *imageView2 = self.imageViews[2];
-    imageView2.image = [self.dataSource imageInCycleView:self atIndex:[self nextPageIndex]];
+    imageView2.image = [self.dataSource imageCycleView:self imageAtIndex:[self nextPageIndex]];
 }
 
 - (NSUInteger)previousPageIndex
@@ -167,18 +172,30 @@ static const NSUInteger WFImageViewCount = 3; // do not try to change
         CGFloat contentOffsetX = scrollView.contentOffset.x;
         if (contentOffsetX <= 0) {
             self.displayPageIndex = [self previousPageIndex];
+            if ([self.delegate respondsToSelector:@selector(imageCycleView:didScrollToImageAtIndex:)]) {
+                [self.delegate imageCycleView:self didScrollToImageAtIndex:self.displayPageIndex];
+            }
             [self loadImages];
         } else if (contentOffsetX >= self.scrollView.bounds.size.width * (WFImageViewCount - 1)) {
             self.displayPageIndex = [self nextPageIndex];
+            if ([self.delegate respondsToSelector:@selector(imageCycleView:didScrollToImageAtIndex:)]) {
+                [self.delegate imageCycleView:self didScrollToImageAtIndex:self.displayPageIndex];
+            }
             [self loadImages];
         }
     } else {
         CGFloat contentOffsetY = scrollView.contentOffset.y;
         if (contentOffsetY <= 0) {
             self.displayPageIndex = [self previousPageIndex];
+            if ([self.delegate respondsToSelector:@selector(imageCycleView:didScrollToImageAtIndex:)]) {
+                [self.delegate imageCycleView:self didScrollToImageAtIndex:self.displayPageIndex];
+            }
             [self loadImages];
         } else if (contentOffsetY >= self.scrollView.bounds.size.height * (WFImageViewCount - 1)) {
             self.displayPageIndex = [self nextPageIndex];
+            if ([self.delegate respondsToSelector:@selector(imageCycleView:didScrollToImageAtIndex:)]) {
+                [self.delegate imageCycleView:self didScrollToImageAtIndex:self.displayPageIndex];
+            }
             [self loadImages];
         }
     }

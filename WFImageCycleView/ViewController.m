@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "WFImageCycleView.h"
 
-@interface ViewController () <WFImageCycleViewDataSource>
+@interface ViewController () <WFImageCycleViewDataSource, WFImageCycleViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *images;
 
@@ -25,6 +25,7 @@
     cycleView.scrollDirection = WFImageCycleViewScrollDirectionHorizontal;
     cycleView.autoScrollTimeInterval = 2;
     cycleView.dataSource = self;
+    cycleView.delegate = self;
     [self.view addSubview:cycleView];
 }
 
@@ -48,9 +49,16 @@
     return self.images.count;
 }
 
-- (UIImage *)imageInCycleView:(WFImageCycleView *)cycleView atIndex:(NSUInteger)index
+- (UIImage *)imageCycleView:(WFImageCycleView *)cycleView imageAtIndex:(NSUInteger)index
 {
     return self.images[index];
+}
+
+#pragma mark - WFImageCycleViewDelegate
+
+- (void)imageCycleView:(WFImageCycleView *)cycleView didScrollToImageAtIndex:(NSUInteger)index
+{
+    NSLog(@"current index is %zd", index);
 }
 
 @end

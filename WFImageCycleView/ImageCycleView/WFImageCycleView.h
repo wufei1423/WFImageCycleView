@@ -21,13 +21,22 @@ typedef NS_ENUM(NSUInteger, WFImageCycleViewScrollDirection) {
 
 - (NSUInteger)countOfImagesInCycleView:(WFImageCycleView *)cycleView;
 
-- (UIImage *)imageInCycleView:(WFImageCycleView *)cycleView atIndex:(NSUInteger)index;
+- (UIImage *)imageCycleView:(WFImageCycleView *)cycleView imageAtIndex:(NSUInteger)index;
+
+@end
+
+@protocol WFImageCycleViewDelegate <NSObject>
+
+@optional
+
+- (void)imageCycleView:(WFImageCycleView *)cycleView didScrollToImageAtIndex:(NSUInteger)index;
 
 @end
 
 @interface WFImageCycleView : UIView
 
 @property (nonatomic, weak) id<WFImageCycleViewDataSource> dataSource;
+@property (nonatomic, weak) id<WFImageCycleViewDelegate> delegate;
 
 /**
  *  default WFImageCycleViewScrollDirectionhorizontal
