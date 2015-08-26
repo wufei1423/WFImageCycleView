@@ -61,4 +61,9 @@
     NSLog(@"current index is %zd", index);
 }
 
+- (void)imageCycleView:(WFImageCycleView *)cycleView didClickImageAtIndex:(NSUInteger)index
+{
+    NSLog(@"click index is %zd", index);
+}
+
 @end

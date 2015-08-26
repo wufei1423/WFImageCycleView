@@ -43,6 +43,9 @@ static const NSUInteger WFImageViewCount = 3; // do not try to change
         _scrollView.pagingEnabled = YES;
         _scrollView.delegate = self;
         [self addSubview:_scrollView];
+        // add gesture
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTap:)];
+        [_scrollView addGestureRecognizer:tapGesture];
     }
     return _scrollView;
 }
@@ -58,6 +61,15 @@ static const NSUInteger WFImageViewCount = 3; // do not try to change
         }
     }
     return _imageViews;
+}
+
+#pragma mark - event handle
+
+- (void)onTap:(UITapGestureRecognizer *)tapGesture
+{
+    if ([self.delegate respondsToSelector:@selector(imageCycleView:didClickImageAtIndex:)]) {
+        [self.delegate imageCycleView:self didClickImageAtIndex:self.displayPageIndex];
+    }
 }
 
 #pragma mark - override

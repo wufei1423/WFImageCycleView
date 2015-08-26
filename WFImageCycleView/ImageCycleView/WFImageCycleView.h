@@ -31,6 +31,8 @@ typedef NS_ENUM(NSUInteger, WFImageCycleViewScrollDirection) {
 
 - (void)imageCycleView:(WFImageCycleView *)cycleView didScrollToImageAtIndex:(NSUInteger)index;
 
+- (void)imageCycleView:(WFImageCycleView *)cycleView didClickImageAtIndex:(NSUInteger)index;
+
 @end
 
 @interface WFImageCycleView : UIView
